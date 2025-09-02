@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadget Comparison Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .animate-slideInLeft {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .animate-slideInRight {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        .animate-rotate {
+            animation: rotate 20s linear infinite;
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-shimmer {
+            background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        .animate-countUp {
+            animation: countUp 0.5s ease-out;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover i {
+            transform: rotate(360deg) scale(1.2);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, #ecf0f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.15);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            text-align: right;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .user-info:hover::before {
+            left: 100%;
+        }
+
+        .user-info:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .user-info p {
+            margin: 0.2rem 0;
+            font-size: 0.9rem;
+            transition: transform 0.3s;
+        }
+
+        .user-info:hover p {
+            transform: translateX(5px);
+        }
+
+        .user-info .name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1551812219-7e6030c3d2b6?ixlib=rb-4.0.3') center/cover;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .filter-section {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .filter-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .filter-group:nth-child(1) { animation-delay: 0.1s; }
+        .filter-group:nth-child(2) { animation-delay: 0.2s; }
+        .filter-group:nth-child(3) { animation-delay: 0.3s; }
+
+        .filter-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .filter-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            align-self: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .filter-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .filter-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+        }
+
+        .filter-btn:active {
+            transform: translateY(0);
+        }
+
+        .gadgets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .gadget-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 0.6s ease-out forwards;
+            position: relative;
+        }
+
+        .gadget-card:nth-child(1) { animation-delay: 0.1s; }
+        .gadget-card:nth-child(2) { animation-delay: 0.2s; }
+        .gadget-card:nth-child(3) { animation-delay: 0.3s; }
+        .gadget-card:nth-child(4) { animation-delay: 0.4s; }
+        .gadget-card:nth-child(5) { animation-delay: 0.5s; }
+        .gadget-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .gadget-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+
+        .gadget-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .gadget-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .gadget-img {
+            height: 200px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gadget-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .gadget-card:hover .gadget-img::before {
+            transform: translateX(100%);
+        }
+
+        .gadget-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gadget-card:hover .gadget-img img {
+            transform: scale(1.1);
+        }
+
+        .gadget-content {
+            padding: 1.5rem;
+        }
+
+        .gadget-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+            transition: color 0.3s;
+        }
+
+        .gadget-card:hover .gadget-title {
+            color: var(--primary);
+        }
+
+        .gadget-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0.5rem 0;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .gadget-card:hover .gadget-price {
+            transform: scale(1.1);
+        }
+
+        .gadget-features {
+            margin: 1rem 0;
+        }
+
+        .gadget-features ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .gadget-features li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInLeft 0.5s ease-out forwards;
+        }
+
+        .gadget-features li:nth-child(1) { animation-delay: 0.1s; }
+        .gadget-features li:nth-child(2) { animation-delay: 0.2s; }
+        .gadget-features li:nth-child(3) { animation-delay: 0.3s; }
+        .gadget-features li:nth-child(4) { animation-delay: 0.4s; }
+        .gadget-features li:nth-child(5) { animation-delay: 0.5s; }
+
+        .gadget-features li i {
+            color: var(--success);
+            margin-right: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .gadget-features li:hover i {
+            transform: rotate(360deg) scale(1.2);
+        }
+
+        .gadget-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255,255,255,0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+        }
+
+        .btn-primary.selected {
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .comparison-bar {
+            background: white;
+            padding: 1rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            transition: all 0.3s;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.7s forwards;
+        }
+
+        .comparison-bar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .comparison-count {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-count span {
+            background: var(--primary);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            min-width: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .comparison-count span.animate-countUp {
+            animation: countUp 0.5s ease-out;
+        }
+
+        .comparison-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 10px;
+            position: relative;
+            transform: scale(0.7);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: #f0f0f0;
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s;
+        }
+
+        .comparison-table tr:hover td {
+            background: #f8f9fa;
+            transform: scale(1.02);
+        }
+
+        .comparison-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .comparison-table img {
+            transition: transform 0.3s;
+        }
+
+        .comparison-table img:hover {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .footer {
+            background: var(--secondary);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--success));
+            animation: shimmer 3s linear infinite;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .footer-column:nth-child(1) { animation-delay: 0.1s; }
+        .footer-column:nth-child(2) { animation-delay: 0.2s; }
+        .footer-column:nth-child(3) { animation-delay: 0.3s; }
+        .footer-column:nth-child(4) { animation-delay: 0.4s; }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .footer-column:hover h3::after {
+            width: 50px;
+        }
+
+        .footer-column ul {
+            list-style-type: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInLeft 0.5s ease-out forwards;
+        }
+
+        .footer-column ul li:nth-child(1) { animation-delay: 0.1s; }
+        .footer-column ul li:nth-child(2) { animation-delay: 0.2s; }
+        .footer-column ul li:nth-child(3) { animation-delay: 0.3s; }
+        .footer-column ul li:nth-child(4) { animation-delay: 0.4s; }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer-column ul li a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-column ul li a:hover::before {
+            width: 100%;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.8s forwards;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: rotate 1s ease-in-out infinite;
+        }
+
+        /* Scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Floating action button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            z-index: 100;
+            opacity: 0;
+            transform: scale(0);
+            animation: fadeInUp 0.5s ease-out 1s forwards;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: var(--accent);
+        }
+
+        /* Notification toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .user-info {
+                text-align: center;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                min-width: 100%;
+            }
+
+            .filter-btn {
+                align-self: stretch;
+            }
+
+            .comparison-bar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .comparison-actions {
+                width: 100%;
+            }
+
+            .fab {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="animate-fadeIn">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo animate-slideInLeft">
+                    <i class="fas fa-microchip animate-rotate"></i>
+                    <h1>GadgetCompare</h1>
+                </div>
+                <div class="user-info animate-slideInRight">
+                    <p class="name">Ansh Baraiya</p>
+                    <p>Enrollment: 240905040005</p>
+                    <p>Batch:Y-1 </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero animate-fadeInUp">
+        <div class="container">
+            <h2 class="animate-fadeInUp">Find Your Perfect Gadget</h2>
+            <p class="animate-fadeInUp">Compare the latest smartphones, laptops, tablets, and more to make the best choice for your needs and budget.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="filter-section">
+            <h2>Filter Gadgets</h2>
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="all">All Categories</option>
+                        <option value="smartphone">Smartphones</option>
+                        <option value="laptop">Laptops</option>
+                        <option value="tablet">Tablets</option>
+                        <option value="headphones">Headphones</option>
+                        <option value="smartwatch">Smartwatches</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="brand">Brand</label>
+                    <select id="brand">
+                        <option value="all">All Brands</option>
+                        <option value="apple">Apple</option>
+                        <option value="samsung">Samsung</option>
+                        <option value="google">Google</option>
+                        <option value="sony">Sony</option>
+                        <option value="microsoft">Microsoft</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="price">Max Price ($)</label>
+                    <input type="number" id="price" placeholder="Enter max price">
+                </div>
+                <button class="filter-btn">Apply Filters</button>
+            </div>
+        </section>
+
+        <div class="comparison-bar">
+            <div class="comparison-count">
+                <i class="fas fa-balance-scale animate-float"></i>
+                <span id="comparison-count">0</span> gadgets selected for comparison
+            </div>
+            <div class="comparison-actions">
+                <button class="btn btn-outline" id="compare-btn">
+                    <i class="fas fa-chart-bar"></i> Compare Selected
+                </button>
+                <button class="btn btn-primary" id="clear-btn">
+                    <i class="fas fa-trash-alt"></i> Clear All
+                </button>
+            </div>
+        </div>
+
+        <section class="gadgets-grid" id="gadgets-container">
+            <!-- Gadget cards will be generated here -->
+        </section>
+    </div>
+
+    <div class="modal" id="comparison-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-chart-line animate-pulse"></i> Gadget Comparison
+                </h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="comparison-table" id="comparison-table">
+                    <!-- Comparison table will be generated here -->
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="fab" id="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i> <span id="toast-message">Action completed!</span>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About GadgetCompare</h3>
+                    <p>We help you make informed decisions by providing detailed comparisons of the latest gadgets and electronics.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Smartphones</a></li>
+                        <li><a href="#">Laptops</a></li>
+                        <li><a href="#">Tablets</a></li>
+                        <li><a href="#">Accessories</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Buying Guides</a></li>
+                        <li><a href="#">Tech Reviews</a></li>
+                        <li><a href="#">Latest News</a></li>
+                        <li><a href="#">Glossary</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@gadgetcompare.com</li>
+                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Silicon Valley</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 GadgetCompare. All rights reserved. | Created by Alex Johnson (GC2023-CS-042)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample gadget data
+        const gadgets = [
+            {
+                id: 1,
+                name: "iPhone 15 Pro",
+                category: "smartphone",
+                brand: "apple",
+                price: 999,
+                image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3",
+                features: [
+                    "A17 Pro chip",
+                    "Titanium design",
+                    "Pro camera system",
+                    "Action Button",
+                    "USB-C"
+                ]
+            },
+            {
+                id: 2,
+                name: "Samsung Galaxy S24 Ultra",
+                category: "smartphone",
+                brand: "samsung",
+                price: 1199,
+                image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?ixlib=rb-4.0.3",
+                features: [
+                    "Snapdragon 8 Gen 3",
+                    "S Pen included",
+                    "200MP camera",
+                    "7.6\" Dynamic AMOLED",
+                    "5000mAh battery"
+                ]
+            },
+            {
+                id: 3,
+                name: "MacBook Pro 16\"",
+                category: "laptop",
+                brand: "apple",
+                price: 2499,
+                image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3",
+                features: [
+                    "M3 Pro chip",
+                    "18-hour battery",
+                    "Liquid Retina XDR display",
+                    "1080p FaceTime camera",
+                    "Six-speaker sound system"
+                ]
+            },
+            {
+                id: 4,
+                name: "Dell XPS 15",
+                category: "laptop",
+                brand: "dell",
+                price: 1899,
+                image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3",
+                features: [
+                    "13th Gen Intel Core",
+                    "NVIDIA RTX 4070",
+                    "15.6\" OLED display",
+                    "32GB RAM",
+                    "1TB SSD"
+                ]
+            },
+            {
+                id: 5,
+                name: "iPad Pro 12.9\"",
+                category: "tablet",
+                brand: "apple",
+                price: 1099,
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3",
+                features: [
+                    "M2 chip",
+                    "Liquid Retina XDR display",
+                    "ProMotion technology",
+                    "Thunderbolt / USB 4",
+                    "Face ID"
+                ]
+            },
+            {
+                id: 6,
+                name: "Sony WH-1000XM5",
+                category: "headphones",
+                brand: "sony",
+                price: 399,
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3",
+                features: [
+                    "Industry-leading noise canceling",
+                    "30-hour battery life",
+                    "Multipoint connection",
+                    "Hi-Res Audio",
+                    "Touch sensor controls"
+                ]
+            }
+        ];
+
+        let selectedGadgets = [];
+
+        // DOM elements
+        const gadgetsContainer = document.getElementById('gadgets-container');
+        const comparisonCount = document.getElementById('comparison-count');
+        const compareBtn = document.getElementById('compare-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const comparisonModal = document.getElementById('comparison-modal');
+        const closeBtn = document.querySelector('.close-btn');
+        const comparisonTable = document.getElementById('comparison-table');
+        const filterBtn = document.querySelector('.filter-btn');
+        const scrollTopBtn = document.getElementById('scroll-top');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        // Initialize the page
+        function init() {
+            renderGadgets(gadgets);
+            setupEventListeners();
+            setupScrollAnimations();
+            setupScrollToTop();
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Render gadgets
+        function renderGadgets(gadgetsToRender) {
+            gadgetsContainer.innerHTML = '';
+            
+            gadgetsToRender.forEach((gadget, index) => {
+                const isSelected = selectedGadgets.some(g => g.id === gadget.id);
+                const card = document.createElement('div');
+                card.className = 'gadget-card scroll-animate';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="gadget-img">
+                        <img src="${gadget.image}" alt="${gadget.name}">
+                    </div>
+                    <div class="gadget-content">
+                        <h3 class="gadget-title">${gadget.name}</h3>
+                        <div class="gadget-price">$${gadget.price}</div>
+                        <div class="gadget-features">
+                            <ul>
+                                ${gadget.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="gadget-actions">
+                            <button class="btn btn-primary ${isSelected ? 'selected' : ''}" data-id="${gadget.id}">
+                                <i class="fas fa-${isSelected ? 'check' : 'plus'}"></i>
+                                ${isSelected ? 'Selected' : 'Select for Comparison'}
+                            </button>
+                            <button class="btn btn-outline">
+                                <i class="fas fa-info-circle"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+                gadgetsContainer.appendChild(card);
+            });
+
+            // Trigger scroll animations
+            setTimeout(() => {
+                document.querySelectorAll('.scroll-animate').forEach(el => {
+                    if (isElementInViewport(el)) {
+                        el.classList.add('visible');
+                    }
+                });
+            }, 100);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Gadget selection
+            gadgetsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('btn-primary') && e.target.dataset.id) {
+                    const gadgetID = parseInt(e.target.dataset.id);
+                    toggleGadgetSelection(gadgetID);
+                }
+            });
+
+            // Compare button
+            compareBtn.addEventListener('click', () => {
+                if (selectedGadgets.length > 0) {
+                    showComparisonModal();
+                    showToast('Comparison table loaded!');
+                } else {
+                    showToast('Please select at least one gadget for comparison');
+                }
+            });
+
+            // Clear button
+            clearBtn.addEventListener('click', () => {
+                selectedGadgets = [];
+                updateComparisonCount();
+                renderGadgets(gadgets);
+                showToast('All selections cleared!');
+            });
+
+            // Close modal
+            closeBtn.addEventListener('click', () => {
+                comparisonModal.classList.remove('show');
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === comparisonModal) {
+                    comparisonModal.classList.remove('show');
+                }
+            });
+
+            // Filter button
+            filterBtn.addEventListener('click', () => {
+                applyFilters();
+                showToast('Filters applied!');
+            });
+
+            // Add ripple effect to buttons
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        }
+
+        // Toggle gadget selection
+        function toggleGadgetSelection(gadgetID) {
+            const gadget = gadgets.find(g => g.id === gadgetID);
+            const index = selectedGadgets.findIndex(g => g.id === gadgetID);
+            
+            if (index === -1) {
+                selectedGadgets.push(gadget);
+                showToast(`${gadget.name} added to comparison!`);
+            } else {
+                selectedGadgets.splice(index, 1);
+                showToast(`${gadget.name} removed from comparison!`);
+            }
+            
+            updateComparisonCount();
+            renderGadgets(gadgets);
+        }
+
+        // Update comparison count with animation
+        function updateComparisonCount() {
+            const countElement = document.getElementById('comparison-count');
+            countElement.classList.remove('animate-countUp');
+            void countElement.offsetWidth; // Trigger reflow
+            countElement.textContent = selectedGadgets.length;
+            countElement.classList.add('animate-countUp');
+        }
+
+        // Show comparison modal
+        function showComparisonModal() {
+            comparisonModal.classList.add('show');
+            renderComparisonTable();
+        }
+
+        // Render comparison table
+        function renderComparisonTable() {
+            comparisonTable.innerHTML = '';
+            
+            // Create table header
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = '<th>Feature</th>';
+            selectedGadgets.forEach(gadget => {
+                headerRow.innerHTML += `<th>${gadget.name}</th>`;
+            });
+            comparisonTable.appendChild(headerRow);
+            
+            // Add image row
+            const imageRow = document.createElement('tr');
+            imageRow.innerHTML = '<td>Image</td>';
+            selectedGadgets.forEach(gadget => {
+                imageRow.innerHTML += `<td><img src="${gadget.image}" alt="${gadget.name}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;"></td>`;
+            });
+            comparisonTable.appendChild(imageRow);
+            
+            // Add price row
+            const priceRow = document.createElement('tr');
+            priceRow.innerHTML = '<td><i class="fas fa-tag"></i> Price</td>';
+            selectedGadgets.forEach(gadget => {
+                priceRow.innerHTML += `<td><strong>$${gadget.price}</strong></td>`;
+            });
+            comparisonTable.appendChild(priceRow);
+            
+            // Add features rows
+            const maxFeatures = Math.max(...selectedGadgets.map(g => g.features.length));
+            for (let i = 0; i < maxFeatures; i++) {
+                const featureRow = document.createElement('tr');
+                featureRow.innerHTML = `<td><i class="fas fa-star"></i> Feature ${i + 1}</td>`;
+                
+                selectedGadgets.forEach(gadget => {
+                    if (gadget.features[i]) {
+                        featureRow.innerHTML += `<td>${gadget.features[i]}</td>`;
+                    } else {
+                        featureRow.innerHTML += `<td><em>-</em></td>`;
+                    }
+                });
+                
+                comparisonTable.appendChild(featureRow);
+            }
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const category = document.getElementById('category').value;
+            const brand = document.getElementById('brand').value;
+            const maxPrice = document.getElementById('price').value;
+            
+            let filteredGadgets = gadgets;
+            
+            if (category !== 'all') {
+                filteredGadgets = filteredGadgets.filter(g => g.category === category);
+            }
+            
+            if (brand !== 'all') {
+                filteredGadgets = filteredGadgets.filter(g => g.brand === brand);
+            }
+            
+            if (maxPrice) {
+                filteredGadgets = filteredGadgets.filter(g => g.price <= parseInt(maxPrice));
+            }
+            
+            renderGadgets(filteredGadgets);
+        }
+
+        // Scroll animations
+        function setupScrollAnimations() {
+            window.addEventListener('scroll', () => {
+                document.querySelectorAll('.scroll-animate').forEach(el => {
+                    if (isElementInViewport(el)) {
+                        el.classList.add('visible');
+                    }
+                });
+            });
+        }
+
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
+        // Scroll to top functionality
+        function setupScrollToTop() {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.style.opacity = '1';
+                    scrollTopBtn.style.transform = 'scale(1)';
+                } else {
+                    scrollTopBtn.style.opacity = '0';
+                    scrollTopBtn.style.transform = 'scale(0)';
+                }
+            });
+
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                showToast('Scrolled to top!');
+            });
+        }
+
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
